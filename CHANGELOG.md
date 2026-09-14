@@ -9,10 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - 2026-09-14
 
+### Added
+- Browser SDK package under `sdk/` with `mount` / `refresh` / `destroy`, schema_version 1 payload parsing, and placeholder loading / empty / error / incompatible_version states.
+- Deterministic `dist/` artifacts: `recording-studio-plugin-sdk.esm.js`, `recording-studio-plugin-sdk.js`, and `recording-studio-plugin-sdk.css`.
+- Flatpack token sync into `.rs-widget` namespaced CSS at build time.
+- Dummy proof host on `/` with `/sdk` assets and `/sdk-fixtures` payloads.
+- CI job for SDK unit tests, dist build, version alignment, and committed artifact drift.
+
 ### Changed
 - Product is the browser plugin SDK. Rubygems name stays `recording_studio_plugin_sdk_template`.
 - Homepage and source URLs use `RecordingStudio_plugin_sdk_template` casing.
 - Engine configuration keeps hooks only. Placeholder `api_key`, `enable_feature_x`, and `timeout` attrs are gone.
+- Gemspec packages `dist/**` for hosts that want the compiled assets from the gem.
 
 ### Removed
 - Example capability mixin and dummy Workspace include.
@@ -23,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove `include RecordingStudio::Capabilities::Example.to(...)` from host models.
 - Drop `config.api_key`, `config.enable_feature_x`, and `config.timeout` from host initializers.
 - Do not copy the removed pages migration into hosts.
+- WordPress adapters should copy `dist/` into the plugin `build/sdk/` folder and load those local files.
 
 ## [0.2.2] - 2026-09-11
 

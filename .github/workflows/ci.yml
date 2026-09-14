@@ -32,16 +32,51 @@ jobs:
 
       - name: Prepare RuboCop cache
         uses: actions/cache@v5
-        env:
-          DEPENDENCIES_HASH: ${{ hashFiles('.ruby-version', '.rubocop.yml', 'Gemfile.lock') }}
         with:
           path: ${{ env.RUBOCOP_CACHE_ROOT }}
-          key: rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-${{ github.ref_name == github.event.repository.default_branch && github.run_id || 'default' }}
+          key: rubocop-${{ runner.os }}-${{ hashFiles('.ruby-version', '.rubocop.yml', 'Gemfile.lock') }}-${{ github.ref_name == github.event.repository.default_branch && github.run_id || 'default' }}
           restore-keys: |
-            rubocop-${{ runner.os }}-${{ env.DEPENDENCIES_HASH }}-
+            rubocop-${{ runner.os }}-${{ hashFiles('.ruby-version', '.rubocop.yml', 'Gemfile.lock') }}-
 
       - name: Lint Ruby
         run: bundle exec rubocop --format github
+
+  sdk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: sdk
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: sdk/package-lock.json
+
+      - name: Install SDK dependencies
+        run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build dist
+        run: npm run build
+
+      - name: Check version alignment
+        run: npm run check:version
+
+      - name: Inspect dist artifacts
+        run: npm run check:dist
+
+      - name: Fail when committed dist drifts
+        working-directory: ${{ github.workspace }}
+        run: git diff --exit-code -- dist test/dummy/public/sdk
 
   test:
     runs-on: ubuntu-latest
@@ -53,7 +88,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: gem_template_test
+          POSTGRES_DB: recording_studio_plugin_sdk_template_test
         ports:
           - 5432:5432
         options: >-
@@ -61,7 +96,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -91,4 +126,4 @@ jobs:
       - name: Run tests
         run: bundle exec rake test:all
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/gem_template_test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/recording_studio_plugin_sdk_template_test

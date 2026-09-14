@@ -136,28 +136,33 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     refute_includes readme_source, "flat_pack_sidebar"
   end
 
-  def test_product_readme_is_the_template_guide
+  def test_product_readme_is_the_sdk_guide
     readme = File.read(File.expand_path("../README.md", __dir__))
 
-    assert_includes readme, "RecordingStudio"
-    assert_includes readme, "v4.2.0"
-    assert_includes readme, "v0.1.177"
-    assert_includes readme, "v0.9.1"
-    refute_includes readme, "v0.1.133"
+    assert_includes readme, "RecordingStudio_plugin_sdk_template"
+    assert_includes readme, "mount"
+    assert_includes readme, "refresh"
+    assert_includes readme, "destroy"
+    assert_includes readme, "schema_version"
+    assert_includes readme, ".rs-widget"
+    assert_includes readme, "build/sdk"
+    assert_includes readme, "dist/recording-studio-plugin-sdk.js"
     refute_includes readme, "v3 declarations"
     refute_includes readme, "RecordingStudio v3"
     refute_includes readme, "ExampleService"
     refute_includes readme, "recording_studio/v3.0.0"
   end
 
-  def test_dummy_home_page_uses_demo_title_only
+  def test_dummy_home_page_mounts_sdk_fixtures
     view_path = File.expand_path("dummy/app/views/home/index.html.erb", __dir__)
     view_source = File.read(view_path)
 
     assert_includes view_source, 'title: "Plugin SDK"'
-    assert_includes view_source, 'subtitle: "This dummy app is the proof host for the browser plugin SDK."'
+    assert_includes view_source, "data-sdk-demo-host"
+    assert_includes view_source, "rs-widget"
     assert_includes view_source, "FlatPack::Card::Component"
     assert_includes view_source, "dummy_page_nav"
+    assert_includes view_source, "/sdk/recording-studio-plugin-sdk.js"
     refute_includes view_source, 'title: "Demo"'
     refute_includes view_source, "FlatPack::Breadcrumb::Component"
   end

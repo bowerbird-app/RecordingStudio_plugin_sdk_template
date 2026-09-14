@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "html": "<p data-fixture=\"ready\">Hello from the fixture.</p>",
+  "configuration": { "demo": true },
+  "sdk": { "minimum_version": "0.3.0" }
+}

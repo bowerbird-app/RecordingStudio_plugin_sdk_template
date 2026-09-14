@@ -1,18 +1,46 @@
+<% content_for :head do %>
+  <link rel="stylesheet" href="/sdk/recording-studio-plugin-sdk.css" data-turbo-track="reload">
+  <script src="/sdk/recording-studio-plugin-sdk.js" defer data-turbo-track="reload"></script>
+<% end %>
+
 <% dummy_page_nav(title: "Plugin SDK", back_url: root_path) %>
 
 <div class="flex w-full flex-col gap-6">
   <%= render FlatPack::PageTitle::Component.new(
     title: "Plugin SDK",
-    subtitle: "This dummy app is the proof host for the browser plugin SDK.",
+    subtitle: "Dummy host proof for mount, refresh, and destroy.",
     variant: :h1
   ) %>
 
+  <%= render FlatPack::Card::Component.new(style: :default) do |card| %>
+    <% card.header do %>
+      <%= render FlatPack::PageTitle::Component.new(
+        title: "Live fixture",
+        subtitle: "Loads schema_version 1 JSON from /sdk-fixtures and mounts under .rs-widget.",
+        variant: :h3,
+        class: "mb-0 pb-0"
+      ) %>
+    <% end %>
+
+    <% card.body do %>
+      <div class="flex flex-wrap gap-2 mb-4" data-sdk-demo-controls>
+        <button type="button" data-sdk-fixture="v1-ready" class="rounded-md border px-3 py-1.5 text-sm">Ready</button>
+        <button type="button" data-sdk-fixture="v1-empty" class="rounded-md border px-3 py-1.5 text-sm">Empty</button>
+        <button type="button" data-sdk-fixture="v1-error" class="rounded-md border px-3 py-1.5 text-sm">Error</button>
+        <button type="button" data-sdk-fixture="v1-incompatible" class="rounded-md border px-3 py-1.5 text-sm">Incompatible</button>
+        <button type="button" data-sdk-action="destroy" class="rounded-md border px-3 py-1.5 text-sm">Destroy</button>
+      </div>
+
+      <div id="sdk-demo-host" class="rs-widget" data-sdk-demo-host aria-live="polite"></div>
+    <% end %>
+  <% end %>
+
   <div class="grid gap-6 lg:grid-cols-2">
-    <%= render FlatPack::Card::Component.new(style: :default) do |card| %>
+    <%= render FlatPack::Card::Component.new(style: :outlined) do |card| %>
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
-          title: "What's working",
-          subtitle: "Host chrome the dummy app already proves.",
+          title: "What's on this page",
+          subtitle: "Host chrome stays FlatPack. Widget chrome comes from dist/.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -20,10 +48,9 @@
 
       <% card.body do %>
         <ul class="space-y-3 text-sm leading-6">
-          <li>Devise sign-in and Recording Studio default layout are wired.</li>
-          <li>Workspace, Folder, and Page recordables seed a small tree.</li>
-          <li>Tailwind and FlatPack stay on the host. The SDK ships finished CSS under <code>.rs-widget</code>.</li>
-          <li>This page is the proof host. It does not mount the gem engine.</li>
+          <li>JS and CSS load from <code>/sdk/</code> (copied from repo <code>dist/</code>).</li>
+          <li>Fixtures live in <code>/sdk-fixtures/</code>.</li>
+          <li>WordPress adapters will copy the same <code>dist/</code> files into plugin <code>build/sdk/</code>.</li>
         </ul>
       <% end %>
     <% end %>
@@ -31,57 +58,8 @@
     <%= render FlatPack::Card::Component.new(style: :outlined) do |card| %>
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
-          title: "Next steps",
-          subtitle: "What this host will prove once dist/ lands.",
-          variant: :h3,
-          class: "mb-0 pb-0"
-        ) %>
-      <% end %>
-
-      <% card.body do %>
-        <ol class="space-y-3 text-sm leading-6 list-decimal pl-5">
-          <li>Load committed <code>dist/</code> JS and CSS on this page.</li>
-          <li>Mount a schema_version 1 fixture under <code>.rs-widget</code>.</li>
-          <li>Keep dummy docs for host wiring. Keep product docs in the root README.</li>
-        </ol>
-      <% end %>
-    <% end %>
-
-    <%= render FlatPack::Card::Component.new(style: :outlined) do |card| %>
-      <% card.header do %>
-        <%= render FlatPack::PageTitle::Component.new(
-          title: "FlatPack usage",
-          subtitle: "Host chrome uses FlatPack. Widget CSS lives in the SDK bundle.",
-          variant: :h3,
-          class: "mb-0 pb-0"
-        ) %>
-      <% end %>
-
-      <% card.body do %>
-        <p class="text-sm leading-6 text-(--surface-content-color)">
-          Dummy pages stay on FlatPack ViewComponents. The browser SDK does not ship Ruby ViewComponents.
-        </p>
-      <% end %>
-
-      <% card.footer do %>
-        <a href="https://flatpack.bowerbird.io/"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="inline-flex">
-          <%= render FlatPack::Button::Component.new(
-            text: "View FlatPack documentation",
-            style: :primary,
-            size: :md
-          ) %>
-        </a>
-      <% end %>
-    <% end %>
-
-    <%= render FlatPack::Card::Component.new(style: :default) do |card| %>
-      <% card.header do %>
-        <%= render FlatPack::PageTitle::Component.new(
-          title: "Install flow",
-          subtitle: "Rails hosts can still install the engine. WordPress copies dist/.",
+          title: "Security notes",
+          subtitle: "Payload HTML is sanitized. API scripts never run.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -89,12 +67,49 @@
 
       <% card.body do %>
         <ul class="space-y-3 text-sm leading-6">
-          <li>Add the gem to a Rails host and run <code>bundle install</code>.</li>
-          <li>Run <code>rails generate recording_studio_plugin_sdk_template:install</code> if you need the engine mounted.</li>
-          <li>WordPress adapters copy <code>dist/</code> into the plugin <code>build/sdk/</code> folder.</li>
-          <li>Rebuild Tailwind if the host scans engine views: <code>bin/rails tailwindcss:build</code>.</li>
+          <li>Script tags and on* handlers are stripped before render.</li>
+          <li>CSS is scoped under <code>.rs-widget</code> (no Shadow DOM).</li>
+          <li>This host does not mount the gem engine and has no Featured In models.</li>
         </ul>
       <% end %>
     <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const host = document.querySelector("[data-sdk-demo-host]");
+    if (!host || !window.RecordingStudioPluginSdk) return;
+
+    const { mount, refresh, destroy } = window.RecordingStudioPluginSdk;
+
+    async function loadFixture(name) {
+      const response = await fetch(`/sdk-fixtures/${name}.json`, { headers: { Accept: "application/json" } });
+      if (!response.ok) throw new Error(`Fixture ${name} failed to load`);
+      return response.json();
+    }
+
+    async function show(name) {
+      const payload = await loadFixture(name);
+      if (host.dataset.rsState) {
+        refresh(host, payload);
+      } else {
+        mount(host, payload);
+      }
+    }
+
+    document.querySelectorAll("[data-sdk-fixture]").forEach((button) => {
+      button.addEventListener("click", () => {
+        show(button.getAttribute("data-sdk-fixture")).catch((error) => {
+          console.error(error);
+        });
+      });
+    });
+
+    document.querySelector("[data-sdk-action='destroy']")?.addEventListener("click", () => {
+      destroy(host);
+    });
+
+    show("v1-ready").catch((error) => console.error(error));
+  });
+</script>

@@ -1,6 +1,7 @@
 # Dependencies
 vendor/bundle/
 node_modules/
+sdk/node_modules/
 .bundle
 
 # Environment
