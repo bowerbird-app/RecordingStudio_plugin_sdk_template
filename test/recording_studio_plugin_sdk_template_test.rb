@@ -173,7 +173,9 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     assert_includes view_source, "FlatPack::Card::Component"
     assert_includes view_source, "FlatPack::Button::Component"
     assert_includes view_source, "dummy_page_nav"
+    assert_includes view_source, "default_layout_head"
     assert_includes view_source, "/sdk/recording-studio-plugin-sdk.js"
+    refute_includes view_source, "content_for :head"
     refute_includes view_source, 'title: "Demo"'
     refute_includes view_source, "FlatPack::Breadcrumb::Component"
   end

@@ -44,6 +44,7 @@ jobs:
   sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # eslint is not in this phase. npm test, build, check:version, and check:dist are the JS gates.
     defaults:
       run:
         working-directory: sdk
