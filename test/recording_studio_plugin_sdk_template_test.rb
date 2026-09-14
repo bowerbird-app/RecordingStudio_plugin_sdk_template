@@ -24,6 +24,14 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     assert_empty cursor_files, "gemspec must not package .cursor/ (got #{cursor_files.inspect})"
   end
 
+  def test_gemspec_packages_dist_artifacts
+    spec = Gem::Specification.load(File.expand_path("../recording_studio_plugin_sdk_template.gemspec", __dir__))
+
+    assert_includes spec.files, "dist/recording-studio-plugin-sdk.js"
+    assert_includes spec.files, "dist/recording-studio-plugin-sdk.esm.js"
+    assert_includes spec.files, "dist/recording-studio-plugin-sdk.css"
+  end
+
   def test_cursor_environment_is_repo_managed_without_snapshot
     path = File.expand_path("../.cursor/environment.json", __dir__)
     json = JSON.parse(File.read(path))
@@ -70,8 +78,10 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
 
   def test_template_does_not_ship_copied_core_hooks_or_base_service
     refute File.exist?(File.expand_path("../lib/recording_studio_plugin_sdk_template/hooks.rb", __dir__))
-    refute File.exist?(File.expand_path("../lib/recording_studio_plugin_sdk_template/services/base_service.rb", __dir__))
-    refute File.exist?(File.expand_path("../lib/recording_studio_plugin_sdk_template/services/example_service.rb", __dir__))
+    refute File.exist?(File.expand_path("../lib/recording_studio_plugin_sdk_template/services/base_service.rb",
+                                        __dir__))
+    refute File.exist?(File.expand_path("../lib/recording_studio_plugin_sdk_template/services/example_service.rb",
+                                        __dir__))
   end
 
   def test_example_capability_is_not_shipped
@@ -161,6 +171,7 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     assert_includes view_source, "data-sdk-demo-host"
     assert_includes view_source, "rs-widget"
     assert_includes view_source, "FlatPack::Card::Component"
+    assert_includes view_source, "FlatPack::Button::Component"
     assert_includes view_source, "dummy_page_nav"
     assert_includes view_source, "/sdk/recording-studio-plugin-sdk.js"
     refute_includes view_source, 'title: "Demo"'

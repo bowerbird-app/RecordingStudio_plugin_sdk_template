@@ -21,13 +21,17 @@ module RecordingStudioPluginSdkTemplate
       end
 
       def copy_initializer
-        template "recording_studio_plugin_sdk_template_initializer.rb", "config/initializers/recording_studio_plugin_sdk_template.rb"
+        template "recording_studio_plugin_sdk_template_initializer.rb",
+                 "config/initializers/recording_studio_plugin_sdk_template.rb"
       end
 
       def add_yaml_config
-        return unless yes?("Would you like to add `config/recording_studio_plugin_sdk_template.yml` for environment-specific settings? [y/N]")
+        prompt = "Add `config/recording_studio_plugin_sdk_template.yml` " \
+                 "for environment-specific settings? [y/N]"
+        return unless yes?(prompt)
 
-        template "recording_studio_plugin_sdk_template.yml", "config/recording_studio_plugin_sdk_template.yml"
+        template "recording_studio_plugin_sdk_template.yml",
+                 "config/recording_studio_plugin_sdk_template.yml"
       end
 
       def add_tailwind_source
@@ -94,11 +98,13 @@ module RecordingStudioPluginSdkTemplate
       end
 
       def tailwind_source_lines
+        vendor = "../../vendor/bundle/**"
+        local = "../../../../../../usr/local/bundle/ruby/**/bundler/gems"
         [
-          '@source "../../vendor/bundle/**/recording_studio_plugin_sdk_template/app/views/**/*.erb";',
-          '@source "../../../../../../usr/local/bundle/ruby/**/bundler/gems/recording_studio_plugin_sdk_template-*/app/views/**/*.erb";',
-          '@source "../../vendor/bundle/**/flatpack/app/components/**/*.{rb,erb}";',
-          '@source "../../../../../../usr/local/bundle/ruby/**/bundler/gems/flatpack-*/app/components/**/*.{rb,erb}";'
+          %(@source "#{vendor}/recording_studio_plugin_sdk_template/app/views/**/*.erb";),
+          %(@source "#{local}/recording_studio_plugin_sdk_template-*/app/views/**/*.erb";),
+          %(@source "#{vendor}/flatpack/app/components/**/*.{rb,erb}";),
+          %(@source "#{local}/flatpack-*/app/components/**/*.{rb,erb}";)
         ]
       end
     end

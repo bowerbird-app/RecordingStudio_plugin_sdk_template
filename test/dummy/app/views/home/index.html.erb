@@ -1,4 +1,4 @@
-<% content_for :head do %>
+<% default_layout_head do %>
   <link rel="stylesheet" href="/sdk/recording-studio-plugin-sdk.css" data-turbo-track="reload">
   <script src="/sdk/recording-studio-plugin-sdk.js" defer data-turbo-track="reload"></script>
 <% end %>
@@ -8,7 +8,7 @@
 <div class="flex w-full flex-col gap-6">
   <%= render FlatPack::PageTitle::Component.new(
     title: "Plugin SDK",
-    subtitle: "Dummy host proof for mount, refresh, and destroy.",
+    subtitle: "Mount a fixture. Swap it. Tear it down.",
     variant: :h1
   ) %>
 
@@ -16,7 +16,7 @@
     <% card.header do %>
       <%= render FlatPack::PageTitle::Component.new(
         title: "Live fixture",
-        subtitle: "Loads schema_version 1 JSON from /sdk-fixtures and mounts under .rs-widget.",
+        subtitle: "Ready, empty, error, and a too-new SDK.",
         variant: :h3,
         class: "mb-0 pb-0"
       ) %>
@@ -24,11 +24,11 @@
 
     <% card.body do %>
       <div class="flex flex-wrap gap-2 mb-4" data-sdk-demo-controls>
-        <button type="button" data-sdk-fixture="v1-ready" class="rounded-md border px-3 py-1.5 text-sm">Ready</button>
-        <button type="button" data-sdk-fixture="v1-empty" class="rounded-md border px-3 py-1.5 text-sm">Empty</button>
-        <button type="button" data-sdk-fixture="v1-error" class="rounded-md border px-3 py-1.5 text-sm">Error</button>
-        <button type="button" data-sdk-fixture="v1-incompatible" class="rounded-md border px-3 py-1.5 text-sm">Incompatible</button>
-        <button type="button" data-sdk-action="destroy" class="rounded-md border px-3 py-1.5 text-sm">Destroy</button>
+        <%= render FlatPack::Button::Component.new(text: "Ready", style: :secondary, size: :sm, data: { sdk_fixture: "v1-ready" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Empty", style: :secondary, size: :sm, data: { sdk_fixture: "v1-empty" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Error", style: :secondary, size: :sm, data: { sdk_fixture: "v1-error" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Incompatible", style: :secondary, size: :sm, data: { sdk_fixture: "v1-incompatible" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Destroy", style: :ghost, size: :sm, data: { sdk_action: "destroy" }) %>
       </div>
 
       <div id="sdk-demo-host" class="rs-widget" data-sdk-demo-host aria-live="polite"></div>
@@ -40,7 +40,7 @@
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
           title: "What's on this page",
-          subtitle: "Host chrome stays FlatPack. Widget chrome comes from dist/.",
+          subtitle: "Host chrome is FlatPack. Widget chrome comes from dist/.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>

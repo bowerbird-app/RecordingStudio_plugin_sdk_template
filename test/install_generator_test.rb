@@ -160,11 +160,13 @@ class InstallGeneratorTest < Minitest::Test
   end
 
   def tailwind_source_lines
+    vendor = "../../vendor/bundle/**"
+    local = "../../../../../../usr/local/bundle/ruby/**/bundler/gems"
     [
-      '@source "../../vendor/bundle/**/recording_studio_plugin_sdk_template/app/views/**/*.erb";',
-      '@source "../../../../../../usr/local/bundle/ruby/**/bundler/gems/recording_studio_plugin_sdk_template-*/app/views/**/*.erb";',
-      '@source "../../vendor/bundle/**/flatpack/app/components/**/*.{rb,erb}";',
-      '@source "../../../../../../usr/local/bundle/ruby/**/bundler/gems/flatpack-*/app/components/**/*.{rb,erb}";'
+      %(@source "#{vendor}/recording_studio_plugin_sdk_template/app/views/**/*.erb";),
+      %(@source "#{local}/recording_studio_plugin_sdk_template-*/app/views/**/*.erb";),
+      %(@source "#{vendor}/flatpack/app/components/**/*.{rb,erb}";),
+      %(@source "#{local}/flatpack-*/app/components/**/*.{rb,erb}";)
     ]
   end
 end

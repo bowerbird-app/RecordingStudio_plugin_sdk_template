@@ -222,23 +222,21 @@ class RenameVerificationTest < Minitest::Test
     # Skip if current name IS gem_template (nothing to check - hasn't been renamed yet)
     skip if @gem_name == "gem_template"
 
-    ruby_files = Dir.glob(File.join(@root, "**", "*.rb"))
-    # Exclude test files and this verification test itself
-    ruby_files.reject! do |file|
+    ruby_files = Dir.glob(File.join(@root, "**", "*.rb")).reject do |file|
       file.include?("test/dummy") ||
         file.end_with?("rename_verification_test.rb") ||
         file.end_with?("rename_gem_identity_test.rb")
     end
 
-    files_with_old_refs = []
-
-    ruby_files.each do |file|
-      content = File.read(file)
-      files_with_old_refs << file if content.include?("gem_template") || content.include?("GemTemplate")
-    end
+    files_with_old_refs = ruby_files.select { |file| ruby_file_has_old_gem_template_refs?(file) }
 
     assert files_with_old_refs.empty?,
            "Found old 'gem_template' references in:\n#{files_with_old_refs.join("\n")}"
+  end
+
+  def ruby_file_has_old_gem_template_refs?(file)
+    content = File.read(file)
+    content.include?("gem_template") || content.include?("GemTemplate")
   end
 
   def test_no_old_gem_template_directories
