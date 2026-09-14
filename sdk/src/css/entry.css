@@ -1,0 +1,31 @@
+.rs-widget {
+  box-sizing: border-box;
+  color: var(--surface-content-color, #1f1f1f);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+
+.rs-widget *,
+.rs-widget *::before,
+.rs-widget *::after {
+  box-sizing: border-box;
+}
+
+.rs-widget[data-rs-state="loading"],
+.rs-widget[data-rs-state="empty"],
+.rs-widget[data-rs-state="error"],
+.rs-widget[data-rs-state="incompatible_version"] {
+  padding: 1rem;
+  border: 1px solid var(--surface-border-color, #e5e5e5);
+  background: var(--surface-muted-background-color, #f7f7f7);
+}
+
+.rs-widget[data-rs-state="error"],
+.rs-widget[data-rs-state="incompatible_version"] {
+  border-color: var(--color-error-border, #d94a4a);
+}
+
+.rs-widget__status {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}

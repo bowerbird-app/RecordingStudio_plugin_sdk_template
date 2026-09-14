@@ -1,18 +1,46 @@
-<% dummy_page_nav(title: "Template Demo", back_url: root_path) %>
+<% default_layout_head do %>
+  <link rel="stylesheet" href="/sdk/recording-studio-plugin-sdk.css" data-turbo-track="reload">
+  <script src="/sdk/recording-studio-plugin-sdk.js" defer data-turbo-track="reload"></script>
+<% end %>
+
+<% dummy_page_nav(title: "Plugin SDK", back_url: root_path) %>
 
 <div class="flex w-full flex-col gap-6">
   <%= render FlatPack::PageTitle::Component.new(
-    title: "Template Demo",
-    subtitle: "This dummy app is the browser-facing demo surface for the template.",
+    title: "Plugin SDK",
+    subtitle: "Mount a fixture. Swap it. Tear it down.",
     variant: :h1
   ) %>
 
+  <%= render FlatPack::Card::Component.new(style: :default) do |card| %>
+    <% card.header do %>
+      <%= render FlatPack::PageTitle::Component.new(
+        title: "Live fixture",
+        subtitle: "Ready, empty, error, and a too-new SDK.",
+        variant: :h3,
+        class: "mb-0 pb-0"
+      ) %>
+    <% end %>
+
+    <% card.body do %>
+      <div class="flex flex-wrap gap-2 mb-4" data-sdk-demo-controls>
+        <%= render FlatPack::Button::Component.new(text: "Ready", style: :secondary, size: :sm, data: { sdk_fixture: "v1-ready" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Empty", style: :secondary, size: :sm, data: { sdk_fixture: "v1-empty" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Error", style: :secondary, size: :sm, data: { sdk_fixture: "v1-error" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Incompatible", style: :secondary, size: :sm, data: { sdk_fixture: "v1-incompatible" }) %>
+        <%= render FlatPack::Button::Component.new(text: "Destroy", style: :ghost, size: :sm, data: { sdk_action: "destroy" }) %>
+      </div>
+
+      <div id="sdk-demo-host" class="rs-widget" data-sdk-demo-host aria-live="polite"></div>
+    <% end %>
+  <% end %>
+
   <div class="grid gap-6 lg:grid-cols-2">
-    <%= render FlatPack::Card::Component.new(style: :default) do |card| %>
+    <%= render FlatPack::Card::Component.new(style: :outlined) do |card| %>
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
-          title: "What's working",
-          subtitle: "Core template capabilities already wired into the dummy app.",
+          title: "What's on this page",
+          subtitle: "Host chrome is FlatPack. Widget chrome comes from dist/.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -20,10 +48,9 @@
 
       <% card.body do %>
         <ul class="space-y-3 text-sm leading-6">
-          <li>Rails engine routes are mounted and responding.</li>
-          <li>PostgreSQL UUID-oriented migrations are included in the engine.</li>
-          <li>Tailwind sources can be wired into a host app through the install generator.</li>
-          <li>The dummy app exercises authentication, the Recording Studio default layout, and FlatPack.</li>
+          <li>JS and CSS load from <code>/sdk/</code> (copied from repo <code>dist/</code>).</li>
+          <li>Fixtures live in <code>/sdk-fixtures/</code>.</li>
+          <li>WordPress adapters will copy the same <code>dist/</code> files into plugin <code>build/sdk/</code>.</li>
         </ul>
       <% end %>
     <% end %>
@@ -31,58 +58,8 @@
     <%= render FlatPack::Card::Component.new(style: :outlined) do |card| %>
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
-          title: "Next steps",
-          subtitle: "The usual first moves when turning the template into a real addon.",
-          variant: :h3,
-          class: "mb-0 pb-0"
-        ) %>
-      <% end %>
-
-      <% card.body do %>
-        <ol class="space-y-3 text-sm leading-6 list-decimal pl-5">
-          <li>Run <code>bin/rename_gem your_addon_name</code> when you are ready to rename the engine.</li>
-          <li>Replace the sample migration with your addon tables and install them into the host app.</li>
-          <li>Configure Recording Studio recordable types and capabilities in the host app initializer.</li>
-          <li>Use the dummy app to validate layout, asset scanning, and authentication flows.</li>
-        </ol>
-      <% end %>
-    <% end %>
-
-    <%= render FlatPack::Card::Component.new(style: :outlined) do |card| %>
-      <% card.header do %>
-        <%= render FlatPack::PageTitle::Component.new(
-          title: "FlatPack usage",
-          subtitle: "This page uses FlatPack components for its primary UI structure.",
-          variant: :h3,
-          class: "mb-0 pb-0"
-        ) %>
-      <% end %>
-
-      <% card.body do %>
-        <p class="text-sm leading-6 text-(--surface-content-color)">
-          Use FlatPack cards, buttons, badges, inputs, and layout primitives as the default path for addon UI. Keep raw HTML for simple semantic content only.
-        </p>
-      <% end %>
-
-      <% card.footer do %>
-        <a href="https://github.com/bowerbird-app/flatpack"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="inline-flex">
-          <%= render FlatPack::Button::Component.new(
-            text: "View FlatPack documentation",
-            style: :primary,
-            size: :md
-          ) %>
-        </a>
-      <% end %>
-    <% end %>
-
-    <%= render FlatPack::Card::Component.new(style: :default) do |card| %>
-      <% card.header do %>
-        <%= render FlatPack::PageTitle::Component.new(
-          title: "Install flow",
-          subtitle: "What the host app generator path covers.",
+          title: "Security notes",
+          subtitle: "Payload HTML is sanitized. API scripts never run.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -90,12 +67,49 @@
 
       <% card.body do %>
         <ul class="space-y-3 text-sm leading-6">
-          <li>Add the gem to your host app and run <code>bundle install</code>.</li>
-          <li>Run <code>rails generate gem_template:install</code> to mount the engine and add configuration.</li>
-          <li>Run <code>rails generate gem_template:migrations</code> to copy engine migrations into the host app.</li>
-          <li>Rebuild Tailwind if needed with <code>bin/rails tailwindcss:build</code>.</li>
+          <li>Script tags and on* handlers are stripped before render.</li>
+          <li>CSS is scoped under <code>.rs-widget</code> (no Shadow DOM).</li>
+          <li>This host does not mount the gem engine and has no WordPress Plugin Demo models.</li>
         </ul>
       <% end %>
     <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const host = document.querySelector("[data-sdk-demo-host]");
+    if (!host || !window.RecordingStudioPluginSdk) return;
+
+    const { mount, refresh, destroy } = window.RecordingStudioPluginSdk;
+
+    async function loadFixture(name) {
+      const response = await fetch(`/sdk-fixtures/${name}.json`, { headers: { Accept: "application/json" } });
+      if (!response.ok) throw new Error(`Fixture ${name} failed to load`);
+      return response.json();
+    }
+
+    async function show(name) {
+      const payload = await loadFixture(name);
+      if (host.dataset.rsState) {
+        refresh(host, payload);
+      } else {
+        mount(host, payload);
+      }
+    }
+
+    document.querySelectorAll("[data-sdk-fixture]").forEach((button) => {
+      button.addEventListener("click", () => {
+        show(button.getAttribute("data-sdk-fixture")).catch((error) => {
+          console.error(error);
+        });
+      });
+    });
+
+    document.querySelector("[data-sdk-action='destroy']")?.addEventListener("click", () => {
+      destroy(host);
+    });
+
+    show("v1-ready").catch((error) => console.error(error));
+  });
+</script>

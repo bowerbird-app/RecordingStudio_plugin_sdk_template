@@ -95,10 +95,10 @@ class RenameVerificationTest < Minitest::Test
            "Expected controllers directory at #{controllers_dir}"
   end
 
-  def test_views_directory_exists
+  def test_views_directory_is_optional_without_engine_screens
     views_dir = File.join(@root, "app", "views", @gem_name)
-    assert Dir.exist?(views_dir),
-           "Expected views directory at #{views_dir}"
+    refute File.exist?(File.join(views_dir, "home", "index.html.erb")),
+           "Engine should not ship a template home view"
   end
 
   # ============================================================
@@ -205,17 +205,10 @@ class RenameVerificationTest < Minitest::Test
                  "Application controller should be in module #{@pascal_name}")
   end
 
-  def test_home_controller_exists
+  def test_home_controller_is_not_shipped
     path = File.join(@root, "app", "controllers", @gem_name, "home_controller.rb")
-    assert File.exist?(path),
-           "Home controller should exist at #{path}"
-  end
-
-  def test_home_controller_has_correct_module
-    path = File.join(@root, "app", "controllers", @gem_name, "home_controller.rb")
-    content = File.read(path)
-    assert_match(/^module #{@pascal_name}$/, content,
-                 "Home controller should be in module #{@pascal_name}")
+    refute File.exist?(path),
+           "Engine should not ship a template home controller"
   end
 
   # ============================================================
@@ -229,19 +222,21 @@ class RenameVerificationTest < Minitest::Test
     # Skip if current name IS gem_template (nothing to check - hasn't been renamed yet)
     skip if @gem_name == "gem_template"
 
-    ruby_files = Dir.glob(File.join(@root, "**", "*.rb"))
-    # Exclude test files and this verification test itself
-    ruby_files.reject! { |f| f.include?("test/dummy") || f.include?("rename_verification_test.rb") }
-
-    files_with_old_refs = []
-
-    ruby_files.each do |file|
-      content = File.read(file)
-      files_with_old_refs << file if content.include?("gem_template") || content.include?("GemTemplate")
+    ruby_files = Dir.glob(File.join(@root, "**", "*.rb")).reject do |file|
+      file.include?("test/dummy") ||
+        file.end_with?("rename_verification_test.rb") ||
+        file.end_with?("rename_gem_identity_test.rb")
     end
+
+    files_with_old_refs = ruby_files.select { |file| ruby_file_has_old_gem_template_refs?(file) }
 
     assert files_with_old_refs.empty?,
            "Found old 'gem_template' references in:\n#{files_with_old_refs.join("\n")}"
+  end
+
+  def ruby_file_has_old_gem_template_refs?(file)
+    content = File.read(file)
+    content.include?("gem_template") || content.include?("GemTemplate")
   end
 
   def test_no_old_gem_template_directories

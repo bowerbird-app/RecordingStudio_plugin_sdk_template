@@ -85,6 +85,14 @@ class GemRenamer
     str.tr("_", "-")
   end
 
+  def github_homepage(name)
+    if name.start_with?("recording_studio_")
+      "https://github.com/bowerbird-app/RecordingStudio_#{name.delete_prefix("recording_studio_")}"
+    else
+      "https://github.com/bowerbird-app/#{name}"
+    end
+  end
+
   def normalize_name(name)
     name.to_s.strip.downcase.gsub(/[^a-z0-9_]/, "_").gsub(/_+/, "_").gsub(/^_|_$/, "")
   end
@@ -491,13 +499,14 @@ class GemRenamer
     return true if content.include?(old_pascal)
     return true if content.match?(%r{bowerbird-app/gem_template(?:["'/]|$)})
     return true if content.include?("https://github.com/bowerbird-app/RecordingStudio_gem_template")
+    return true if content.match?(%r{https://github.com/bowerbird-app/recording_studio_})
 
     false
   end
 
   def rewrite_leftover_homepages!(updated)
     LEFTOVER_HOMEPAGES.each do |old_homepage|
-      updated.gsub!(old_homepage, "https://github.com/bowerbird-app/#{@new_name}")
+      updated.gsub!(old_homepage, github_homepage(@new_name))
     end
   end
 

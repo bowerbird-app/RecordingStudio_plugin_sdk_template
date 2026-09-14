@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "npm test --prefix sdk",
+    "build": "npm run build --prefix sdk",
+    "check:version": "node sdk/scripts/check-version.mjs",
+    "check:dist": "node sdk/scripts/check-dist.mjs"
+  }
+}

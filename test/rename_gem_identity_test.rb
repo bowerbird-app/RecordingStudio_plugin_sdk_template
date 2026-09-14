@@ -8,6 +8,8 @@ class RenameGemIdentityTest < Minitest::Test
 
     assert_includes script, "https://github.com/bowerbird-app/RecordingStudio_gem_template"
     assert_includes script, "https://github.com/bowerbird-app/gem_template"
+    assert_includes script, "def github_homepage(name)"
+    assert_includes script, "RecordingStudio_"
     assert_includes script, "rewrite_leftover_homepages!"
     assert_includes script, "leftover_template_identity?"
     assert_includes script, "README.md"

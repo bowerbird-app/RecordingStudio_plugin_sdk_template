@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-GemTemplate::Engine.routes.draw do
-  root "home#index"
+# Phase 2 ships no engine routes — the dummy app hosts the SDK proof UI.
+# rubocop:disable Lint/EmptyBlock
+RecordingStudioPluginSdkTemplate::Engine.routes.draw do
 end
+# rubocop:enable Lint/EmptyBlock
