@@ -49,3 +49,24 @@ test("payload-only scripts leave the widget empty", () => {
   assert.equal(host.dataset.rsState, "empty");
   assert.equal(host.textContent, "Nothing to show yet.");
 });
+
+test("strips javascript: href and src", () => {
+  installDom();
+  const host = document.createElement("div");
+  host.className = "rs-widget";
+
+  mount(
+    host,
+    validPayload({
+      html: '<a href="javascript:alert(1)">Link</a><img src="javascript:alert(1)" alt="x">',
+    })
+  );
+
+  const link = host.querySelector("a");
+  const image = host.querySelector("img");
+  assert.ok(link);
+  assert.ok(image);
+  assert.equal(link.getAttribute("href"), null);
+  assert.equal(image.getAttribute("src"), null);
+  assert.equal(link.textContent, "Link");
+});

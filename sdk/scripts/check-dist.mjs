@@ -37,4 +37,15 @@ if (!iife.includes("RecordingStudioPluginSdk")) {
   process.exit(1);
 }
 
+const esm = await readFile(path.join(distDir, "recording-studio-plugin-sdk.esm.js"), "utf8");
+for (const [name, source] of [
+  ["recording-studio-plugin-sdk.js", iife],
+  ["recording-studio-plugin-sdk.esm.js", esm]
+]) {
+  if (/\beval\s*\(/.test(source)) {
+    console.error(`${name} contains eval(`);
+    process.exit(1);
+  }
+}
+
 console.log("dist artifacts ok");

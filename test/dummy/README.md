@@ -10,7 +10,7 @@ This Rails app exists to prove the Recording Studio plugin SDK in a real host ap
 - Recording Studio default layout, FlatPack assets, and Tailwind source scanning
 - Mounted `RecordingStudio::Engine` route behavior inside a host app
 - Dummy-only `/docs/*` pages for host-app onboarding
-- A home page that will load committed `dist/` and mount a schema_version 1 fixture
+- A home page that loads committed `dist/` and mounts a schema_version 1 fixture
 
 ## Quick Start
 

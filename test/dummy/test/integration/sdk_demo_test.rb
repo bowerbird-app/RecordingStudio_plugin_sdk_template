@@ -21,6 +21,10 @@ class SdkDemoTest < ActionDispatch::IntegrationTest
     assert_match(%r{/sdk/recording-studio-plugin-sdk\.js}, response.body)
     assert_select "[data-sdk-demo-host].rs-widget"
     assert_select "[data-sdk-fixture=v1-ready]"
+    assert_select "[data-sdk-fixture=v1-empty]"
+    assert_select "[data-sdk-fixture=v1-error]"
+    assert_select "[data-sdk-fixture=v1-incompatible]"
+    assert_select "[data-sdk-action=destroy]"
   end
 
   test "fixture payloads are schema_version 1 shaped" do
