@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-14
+
+### Changed
+- Product is the browser plugin SDK. Rubygems name stays `recording_studio_plugin_sdk_template`.
+- Homepage and source URLs use `RecordingStudio_plugin_sdk_template` casing.
+- Engine configuration keeps hooks only. Placeholder `api_key`, `enable_feature_x`, and `timeout` attrs are gone.
+
+### Removed
+- Example capability mixin and dummy Workspace include.
+- Template pages migration.
+- Engine home controller and product root route.
+
+### Upgrade notes
+- Remove `include RecordingStudio::Capabilities::Example.to(...)` from host models.
+- Drop `config.api_key`, `config.enable_feature_x`, and `config.timeout` from host initializers.
+- Do not copy the removed pages migration into hosts.
+
 ## [0.2.2] - 2026-09-11
 
 ### Changed
@@ -90,10 +107,11 @@ New addons copied from this template are born on Recording Studio 4.x.
 - Comprehensive README and documentation
 - Basic test suite with Minitest
 
-[Unreleased]: https://github.com/bowerbird-app/recording_studio_plugin_sdk_template/compare/v0.2.2...HEAD
-[0.2.2]: https://github.com/bowerbird-app/recording_studio_plugin_sdk_template/releases/tag/v0.2.2
-[0.2.1]: https://github.com/bowerbird-app/recording_studio_plugin_sdk_template/releases/tag/v0.2.1
-[0.2.0]: https://github.com/bowerbird-app/recording_studio_plugin_sdk_template/releases/tag/v0.2.0
-[0.1.2]: https://github.com/bowerbird-app/recording_studio_plugin_sdk_template/releases/tag/v0.1.2
-[0.1.1]: https://github.com/bowerbird-app/recording_studio_plugin_sdk_template/releases/tag/v0.1.1
-[0.1.0]: https://github.com/bowerbird-app/recording_studio_plugin_sdk_template/releases/tag/v0.1.0
+[Unreleased]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.0
+[0.2.2]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.2
+[0.2.1]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.1
+[0.2.0]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.0
+[0.1.2]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.1.2
+[0.1.1]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.1.1
+[0.1.0]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.1.0

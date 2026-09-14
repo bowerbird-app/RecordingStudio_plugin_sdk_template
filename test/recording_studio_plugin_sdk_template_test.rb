@@ -4,7 +4,7 @@ require "test_helper"
 
 class RecordingStudioPluginSdkTemplateTest < Minitest::Test
   def test_version_matches_release
-    assert_equal "0.2.2", ::RecordingStudioPluginSdkTemplate::VERSION
+    assert_equal "0.3.0", ::RecordingStudioPluginSdkTemplate::VERSION
   end
 
   def test_engine_exists
@@ -74,16 +74,10 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     refute File.exist?(File.expand_path("../lib/recording_studio_plugin_sdk_template/services/example_service.rb", __dir__))
   end
 
-  def test_example_capability_wraps_include_for_and_is_not_enabled_globally
-    source = File.read(File.expand_path("../lib/recording_studio_plugin_sdk_template/capabilities/example.rb", __dir__))
-
-    assert_includes source, "def self.to(**)"
-    assert_includes source, "RecordingStudio::Capabilities.include_for(:example, **)"
-    refute_includes source, "enable_capability"
-    refute_includes source, "set_capability_options"
-    refute RecordingStudio.capability_enabled?(:example, for: "Folder")
-    refute RecordingStudio.capability_enabled?(:example, for: "Page")
-    assert_empty RecordingStudio.configuration.enabled_recordable_types_for(:example)
+  def test_example_capability_is_not_shipped
+    refute File.exist?(File.expand_path("../lib/recording_studio_plugin_sdk_template/capabilities/example.rb", __dir__))
+    refute defined?(RecordingStudio::Capabilities::Example)
+    refute RecordingStudio.registered_capabilities.key?(:example)
   end
 
   def test_dummy_app_uses_recording_studio_default_layout
@@ -136,7 +130,7 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     readme_path = File.expand_path("dummy/README.md", __dir__)
     readme_source = File.read(readme_path)
 
-    assert_includes readme_source, "This Rails app exists to validate the Recording Studio addon template"
+    assert_includes readme_source, "This Rails app exists to prove the Recording Studio plugin SDK"
     assert_includes readme_source, "/recording_studio"
     assert_includes readme_source, "redirects to `/`"
     refute_includes readme_source, "flat_pack_sidebar"
@@ -160,8 +154,8 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     view_path = File.expand_path("dummy/app/views/home/index.html.erb", __dir__)
     view_source = File.read(view_path)
 
-    assert_includes view_source, 'title: "Template Demo"'
-    assert_includes view_source, 'subtitle: "This dummy app is the browser-facing demo surface for the template."'
+    assert_includes view_source, 'title: "Plugin SDK"'
+    assert_includes view_source, 'subtitle: "This dummy app is the proof host for the browser plugin SDK."'
     assert_includes view_source, "FlatPack::Card::Component"
     assert_includes view_source, "dummy_page_nav"
     refute_includes view_source, 'title: "Demo"'

@@ -4,7 +4,6 @@ require "recording_studio"
 require "recording_studio_plugin_sdk_template/version"
 require "recording_studio_plugin_sdk_template/engine"
 require "recording_studio_plugin_sdk_template/configuration"
-require "recording_studio_plugin_sdk_template/capabilities/example"
 
 module RecordingStudioPluginSdkTemplate
   class << self

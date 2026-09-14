@@ -1,9 +1,9 @@
-<% dummy_page_nav(title: "Template Demo", back_url: root_path) %>
+<% dummy_page_nav(title: "Plugin SDK", back_url: root_path) %>
 
 <div class="flex w-full flex-col gap-6">
   <%= render FlatPack::PageTitle::Component.new(
-    title: "Template Demo",
-    subtitle: "This dummy app is the browser-facing demo surface for the template.",
+    title: "Plugin SDK",
+    subtitle: "This dummy app is the proof host for the browser plugin SDK.",
     variant: :h1
   ) %>
 
@@ -12,7 +12,7 @@
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
           title: "What's working",
-          subtitle: "Core template capabilities already wired into the dummy app.",
+          subtitle: "Host chrome the dummy app already proves.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -20,10 +20,10 @@
 
       <% card.body do %>
         <ul class="space-y-3 text-sm leading-6">
-          <li>Rails engine routes are mounted and responding.</li>
-          <li>PostgreSQL UUID-oriented migrations are included in the engine.</li>
-          <li>Tailwind sources can be wired into a host app through the install generator.</li>
-          <li>The dummy app exercises authentication, the Recording Studio default layout, and FlatPack.</li>
+          <li>Devise sign-in and Recording Studio default layout are wired.</li>
+          <li>Workspace, Folder, and Page recordables seed a small tree.</li>
+          <li>Tailwind and FlatPack stay on the host. The SDK ships finished CSS under <code>.rs-widget</code>.</li>
+          <li>This page is the proof host. It does not mount the gem engine.</li>
         </ul>
       <% end %>
     <% end %>
@@ -32,7 +32,7 @@
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
           title: "Next steps",
-          subtitle: "The usual first moves when turning the template into a real addon.",
+          subtitle: "What this host will prove once dist/ lands.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -40,10 +40,9 @@
 
       <% card.body do %>
         <ol class="space-y-3 text-sm leading-6 list-decimal pl-5">
-          <li>Run <code>bin/rename_gem your_addon_name</code> when you are ready to rename the engine.</li>
-          <li>Replace the sample migration with your addon tables and install them into the host app.</li>
-          <li>Configure Recording Studio recordable types and capabilities in the host app initializer.</li>
-          <li>Use the dummy app to validate layout, asset scanning, and authentication flows.</li>
+          <li>Load committed <code>dist/</code> JS and CSS on this page.</li>
+          <li>Mount a schema_version 1 fixture under <code>.rs-widget</code>.</li>
+          <li>Keep dummy docs for host wiring. Keep product docs in the root README.</li>
         </ol>
       <% end %>
     <% end %>
@@ -52,7 +51,7 @@
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
           title: "FlatPack usage",
-          subtitle: "This page uses FlatPack components for its primary UI structure.",
+          subtitle: "Host chrome uses FlatPack. Widget CSS lives in the SDK bundle.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -60,12 +59,12 @@
 
       <% card.body do %>
         <p class="text-sm leading-6 text-(--surface-content-color)">
-          Use FlatPack cards, buttons, badges, inputs, and layout primitives as the default path for addon UI. Keep raw HTML for simple semantic content only.
+          Dummy pages stay on FlatPack ViewComponents. The browser SDK does not ship Ruby ViewComponents.
         </p>
       <% end %>
 
       <% card.footer do %>
-        <a href="https://github.com/bowerbird-app/flatpack"
+        <a href="https://flatpack.bowerbird.io/"
            target="_blank"
            rel="noopener noreferrer"
            class="inline-flex">
@@ -82,7 +81,7 @@
       <% card.header do %>
         <%= render FlatPack::PageTitle::Component.new(
           title: "Install flow",
-          subtitle: "What the host app generator path covers.",
+          subtitle: "Rails hosts can still install the engine. WordPress copies dist/.",
           variant: :h3,
           class: "mb-0 pb-0"
         ) %>
@@ -90,10 +89,10 @@
 
       <% card.body do %>
         <ul class="space-y-3 text-sm leading-6">
-          <li>Add the gem to your host app and run <code>bundle install</code>.</li>
-          <li>Run <code>rails generate gem_template:install</code> to mount the engine and add configuration.</li>
-          <li>Run <code>rails generate gem_template:migrations</code> to copy engine migrations into the host app.</li>
-          <li>Rebuild Tailwind if needed with <code>bin/rails tailwindcss:build</code>.</li>
+          <li>Add the gem to a Rails host and run <code>bundle install</code>.</li>
+          <li>Run <code>rails generate recording_studio_plugin_sdk_template:install</code> if you need the engine mounted.</li>
+          <li>WordPress adapters copy <code>dist/</code> into the plugin <code>build/sdk/</code> folder.</li>
+          <li>Rebuild Tailwind if the host scans engine views: <code>bin/rails tailwindcss:build</code>.</li>
         </ul>
       <% end %>
     <% end %>

@@ -2,10 +2,10 @@
 
 ## Architecture
 
-- This repository is a Rails mountable engine template for building Recording Studio addons.
-- Preserve engine namespace isolation under `GemTemplate` unless the task is explicitly about renaming the gem.
-- Treat `docs/gem_template/` as architectural reference material. For current addon workflow, prefer the top-level README and the dummy app.
-- Keep changes small and scoped. Do not rewrite template surfaces unless the request requires it.
+- This repository is the Recording Studio browser plugin SDK. The Rubygems name stays `recording_studio_plugin_sdk_template`.
+- Preserve engine namespace isolation under `RecordingStudioPluginSdkTemplate`. Do not invent `RecordingStudioPluginSDK`.
+- Treat `docs/gem_template/` as architectural reference material. For current product workflow, prefer the top-level README and the dummy proof host.
+- Keep changes small and scoped. Dummy is a proof host for `dist/`. It does not mount this gem's engine.
 
 ## UI Conventions
 
