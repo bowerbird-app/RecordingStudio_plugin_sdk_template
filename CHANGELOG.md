@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI job for SDK unit tests, dist build, version alignment, and committed artifact drift.
 
 ### Changed
-- Product is the browser plugin SDK. Rubygems name stays `recording_studio_plugin_sdk_template`.
+- Product is the browser plugin SDK for the WordPress plugin feature. Rubygems name stays `recording_studio_plugin_sdk_template`.
+- Dummy and product copy use WordPress Plugin Demo naming only.
 - Homepage and source URLs use `RecordingStudio_plugin_sdk_template` casing.
 - Engine configuration keeps hooks only. Placeholder `api_key`, `enable_feature_x`, and `timeout` attrs are gone.
 - Gemspec packages `dist/**` for hosts that want the compiled assets from the gem.

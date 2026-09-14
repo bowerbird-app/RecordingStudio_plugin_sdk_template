@@ -2,7 +2,7 @@
   "name": "recording-studio-plugin-sdk",
   "version": "0.3.0",
   "private": true,
-  "description": "Browser plugin SDK for Recording Studio Featured In and WordPress adapters",
+  "description": "Browser plugin SDK for the Recording Studio WordPress plugin feature",
   "type": "module",
   "scripts": {
     "sync:tokens": "node scripts/sync-flatpack-tokens.mjs",

@@ -1,6 +1,6 @@
 # Recording Studio plugin SDK
 
-Browser plugin SDK for Featured In and WordPress adapters.
+Browser plugin SDK for the WordPress plugin feature.
 
 Homepage: [github.com/bowerbird-app/RecordingStudio_plugin_sdk_template](https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template)
 
@@ -110,7 +110,7 @@ Gem `RecordingStudioPluginSdkTemplate::VERSION`, `sdk/package.json`, and `sdk/sr
 
 ## Dummy host
 
-The dummy app in `test/dummy/` is a Rails 8.1 proof host. It mounts Recording Studio, signs in with Devise, and renders FlatPack. It does not mount this gem's engine. It has no Featured In models and no WordPress adapter.
+The dummy app in `test/dummy/` is a Rails 8.1 proof host. It mounts Recording Studio, signs in with Devise, and renders FlatPack. It does not mount this gem's engine. It has no WordPress Plugin Demo models and no WordPress adapter.
 
 Open `/` after sign-in to mount fixture payloads from `/sdk-fixtures/` with assets from `/sdk/`.
 
@@ -146,4 +146,4 @@ Authenticated dummy pages use Recording Studio's shared default layout (`Recordi
 
 ## Out of scope
 
-This phase does not include WordPress OAuth or proxy, `RS_Embeddable`, real Featured In widgets, Shadow DOM, or npm or CDN publish.
+This phase does not include WordPress OAuth or proxy, `RS_Embeddable`, real WordPress plugin feature widgets, Shadow DOM, or npm or CDN publish.

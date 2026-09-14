@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version     = RecordingStudioPluginSdkTemplate::VERSION
   spec.authors     = ["Bowerbird"]
   spec.homepage    = "https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template"
-  spec.summary     = "Browser plugin SDK for Recording Studio Featured In and WordPress adapters"
+  spec.summary     = "Browser plugin SDK for the Recording Studio WordPress plugin feature"
   spec.description = "Ships a schema_version 1 browser SDK with mount, refresh, and destroy. " \
                      "Rails dummy is the proof host. WordPress copies dist/ into the plugin build."
   spec.license     = "MIT"
