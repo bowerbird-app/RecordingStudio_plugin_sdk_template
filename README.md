@@ -112,6 +112,8 @@ Gem `RecordingStudioPluginSdkTemplate::VERSION`, `sdk/package.json`, and `sdk/sr
 
 The dummy app in `test/dummy/` is a Rails 8.1 proof host. It mounts Recording Studio, signs in with Devise, and renders FlatPack. It does not mount this gem's engine. It has no WordPress Plugin Demo models and no WordPress adapter.
 
+Dummy credentials (`test/dummy/config/credentials.yml.enc`) are encrypted with the shared RecordingStudio_* development master key. Set `RAILS_MASTER_KEY` or put that key in `test/dummy/config/master.key` (gitignored). Keep the encrypted file; do not generate a per-repo dummy key.
+
 Open `/` after sign-in to mount fixture payloads from `/sdk-fixtures/` with assets from `/sdk/`.
 
 Authenticated dummy pages use Recording Studio's shared default layout (`RecordingStudio::UsesDefaultLayout`) plus FlatPack CSS and JS. Devise keeps its own sign-in layout. Dummy `/docs/*` pages stay in the dummy app as a host-app sandbox.
