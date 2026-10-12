@@ -53,7 +53,7 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     gemfile = File.read(File.expand_path("dummy/Gemfile", __dir__))
 
     assert_includes gemfile, 'github: "bowerbird-app/RecordingStudio", tag: "v4.5.0"'
-    assert_includes gemfile, 'github: "bowerbird-app/RecordingStudio_accessible", tag: "v0.13.0"'
+    assert_includes gemfile, 'github: "bowerbird-app/RecordingStudio_accessible", tag: "v0.15.0"'
     assert_includes gemfile, 'github: "bowerbird-app/RecordingStudio_root_switchable", tag: "v0.8.0"'
     assert_includes gemfile, 'github: "bowerbird-app/RecordingStudio_metrics", tag: "v0.2.0"'
     assert_includes gemfile, 'github: "bowerbird-app/flatpack", tag: "v0.1.177"'
@@ -92,6 +92,25 @@ class RecordingStudioPluginSdkTemplateTest < Minitest::Test
     refute_includes schema, 't.integer "role"'
     assert_includes File.read(invitation_migration), "create_table :recording_studio_access_invitations"
     assert_includes File.read(role_migration), "change_column :recording_studio_accesses, :role, :string"
+  end
+
+  def test_dummy_schema_includes_accessible_audience_tables
+    schema = File.read(File.expand_path("dummy/db/schema.rb", __dir__))
+    constraints_migration = Dir.glob(
+      File.expand_path("dummy/db/migrate/*_create_recording_studio_access_constraints.rb", __dir__)
+    ).max
+    rules_migration = Dir.glob(
+      File.expand_path("dummy/db/migrate/*_create_recording_studio_access_rules.rb", __dir__)
+    ).max
+
+    assert constraints_migration, "expected access constraints migration"
+    assert rules_migration, "expected access rules migration"
+    assert_includes schema, 'create_table "recording_studio_access_constraints"'
+    assert_includes schema, 'create_table "recording_studio_access_rules"'
+    assert_includes schema, "index_recording_studio_access_constraints_on_action"
+    assert_includes schema, "index_recording_studio_access_rules_on_action"
+    assert_includes File.read(constraints_migration), "create_table :recording_studio_access_constraints"
+    assert_includes File.read(rules_migration), "create_table :recording_studio_access_rules"
   end
 
   def test_template_does_not_ship_copied_core_hooks_or_base_service
