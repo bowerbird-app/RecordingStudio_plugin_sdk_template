@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Dummy Sign out Button uses FlatPack `href:` instead of `url:` so the link renders correctly on FlatPack ≥ 0.1.177.
 - Bump Recording Studio GitHub pin to `v4.2.2` (gemspec stays `~> 4.2`).
 
 ## [0.3.0] - 2026-09-14
