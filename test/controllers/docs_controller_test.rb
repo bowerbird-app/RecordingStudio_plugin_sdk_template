@@ -6,9 +6,11 @@ require_relative "../dummy/config/environment"
 
 require "devise/test/integration_helpers"
 require "rails/test_help"
+require_relative "../dummy/test/support/accessible_test_helpers"
 
 class DocsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+  include AccessibleTestHelpers
 
   TEST_PASSWORD = "DocsTestPassword!2026"
 
@@ -79,6 +81,7 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
   test "recordings tree page renders successfully" do
     workspace = Workspace.create!(name: "Tree Workspace")
     root_recording = RecordingStudio.root_recording_for(workspace)
+    grant_accessible!(recording: root_recording, actor: @user)
     folder = Folder.create!(name: "Reference")
     folder_recording = record_child(folder, root_recording, root_recording)
     page = Page.create!(title: "API")
@@ -91,7 +94,7 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "Workspace: Tree Workspace"
     assert_includes response.body, "Folder: Reference"
     assert_includes response.body, "Page: API"
-    assert_includes response.body, "Access: Admin for admin@admin.com"
+    assert_includes response.body, "Access: Admin for docs-test@example.com"
     refute_includes response.body, "Access boundary"
     assert_select "div[role='tree']", count: 1
     assert_select "[role='treeitem']", minimum: 3
@@ -141,6 +144,7 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     end
 
     root_recording = RecordingStudio.root_recording_for(workspace)
+    grant_accessible!(recording: root_recording, actor: @user)
     folder = Folder.create!(name: "Counted Folder")
     record_child(folder, root_recording, root_recording)
 

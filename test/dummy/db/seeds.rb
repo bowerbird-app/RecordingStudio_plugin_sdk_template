@@ -10,21 +10,7 @@ bootstrap_owner_access = lambda do |recording, actor|
     recording: recording,
     actor: actor
   )
-  next if result.success?
-
-  original = RecordingStudioAccessible.configuration.access_management_authorizer
-  begin
-    RecordingStudioAccessible.configuration.access_management_authorizer = ->(**) { true }
-    result = RecordingStudioAccessible.grant_access(
-      recording: recording,
-      actor: actor,
-      role: :admin,
-      manager_actor: actor
-    )
-    raise "Failed to grant workspace access: #{result.error}" if result.failure?
-  ensure
-    RecordingStudioAccessible.configuration.access_management_authorizer = original
-  end
+  raise "Failed to grant workspace access: #{result.error}" if result.failure?
 end
 
 find_or_record_child = lambda do |recordable, root_recording, parent_recording|
@@ -36,7 +22,8 @@ find_or_record_child = lambda do |recordable, root_recording, parent_recording|
     action: "created",
     recordable: recordable,
     root_recording: root_recording,
-    parent_recording: parent_recording
+    parent_recording: parent_recording,
+    actor: Current.actor
   ).recording
 end
 
@@ -62,13 +49,13 @@ begin
   accessible_root_recording = RecordingStudio.root_recording_for(accessible_workspace)
   private_root_recording = RecordingStudio.root_recording_for(private_workspace)
 
-  folder_recording = find_or_record_child.call(folder, root_recording, root_recording)
-
-  find_or_record_child.call(page, root_recording, folder_recording)
-
   # Studio and Client are workspaces the seeded admin can open. Private stays ungranted.
   bootstrap_owner_access.call(root_recording, user)
   bootstrap_owner_access.call(accessible_root_recording, user)
+
+  folder_recording = find_or_record_child.call(folder, root_recording, root_recording)
+
+  find_or_record_child.call(page, root_recording, folder_recording)
 ensure
   Current.actor = previous_actor
 end

@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Upgrade notes
 - Point host Gemfiles at Recording Studio `v6.5.0` (or another 6.3–6.x tag), FlatPack `v0.1.341`, and Root Switchable `v0.11.7`.
 - Replace `include RecordingStudio::UsesDefaultLayout` with `recording_studio_layout`. Set `content_for :title` and `flat_pack_page_nav` on screens that used `recording_studio_page_nav`.
-- Set `config.authorize_write` before Recording Studio 6.5. Dummy allows persisted `User` actors.
+- Set `config.authorize_write` before Recording Studio 6.5. Dummy delegates that gate to Accessible (`:edit` on the root; access grant/bootstrap uses `AccessCreationContext`).
 - Run Accessible migrations for 0.24, then `bin/rails db:migrate`. Rebuild Tailwind after the FlatPack tag bump.
 - Dummy Root Switchable lists roots with `RecordingStudioAccessible.root_recordings_for`. Seed owner grants on Studio and Client workspaces. Grant Accessible access in dummy root-switch tests. Private Workspace stays ungranted.
 
