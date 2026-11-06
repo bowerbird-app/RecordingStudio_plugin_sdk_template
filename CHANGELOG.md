@@ -7,18 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Security
-- Dummy lockfile: `view_component` `>= 4.14` (GHSA-8qw7-6phv-7q6p) via FlatPack `v0.1.311`, and `crass` `>= 1.0.8` (CVE-2026-116695). Root lockfile also moves `crass` to `>= 1.0.8`. Dummy Recording Studio is `v4.7.1`, Root Switchable `v0.10.0`, and Metrics `v0.3.1` so default layout and the switch page match FlatPack 0.1.311.
-
-## [0.3.1] - 2026-11-06
+## [0.3.7] - 2026-11-06
 
 ### Security
 - Root and dummy lockfiles: Rails `8.1.4.1`, rack `>= 3.2.8`, nokogiri `>= 1.19.5`, loofah `>= 2.25.3`, rails-html-sanitizer `>= 1.7.2`. Dummy also refreshes `net-ssh`.
+- Dummy lockfile: `view_component` `>= 4.14` (GHSA-8qw7-6phv-7q6p) via FlatPack `v0.1.341`, and `crass` `>= 1.0.8` (CVE-2026-116695). Root lockfile also moves `crass` to `>= 1.0.8`. Root and dummy also lift `action_text-trix`, `bcrypt`, `concurrent-ruby`, `devise`, `erb`, `net-imap`, `puma`, `rack-session`, and `websocket-driver` to current advisory floors.
 - Ruby pin `.ruby-version` `3.3.6` → `3.3.13`.
 
 ### Changed
 - Dummy Sign out Button uses FlatPack `href:` instead of `url:` so the link renders correctly on FlatPack ≥ 0.1.177.
-- Bump Recording Studio GitHub pin to `v4.2.2` (gemspec stays `~> 4.2`).
+- Dummy FlatPack GitHub pin `v0.1.177` → `v0.1.341`. Recording Studio stays `v4.7.1` (Trashable `~> 4.7`). Root Switchable stays `v0.10.0` because `v0.11.7` needs Recording Studio `>= 6.3` and this gemspec stays `~> 4.2`. Metrics stays `v0.3.1`.
+- Gem version `0.3.0` → `0.3.7` (do not reuse `0.3.1`–`0.3.6` tags).
 
 ## [0.3.0] - 2026-09-14
 
@@ -130,8 +129,8 @@ New addons copied from this template are born on Recording Studio 4.x.
 - Comprehensive README and documentation
 - Basic test suite with Minitest
 
-[Unreleased]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/compare/v0.3.1...HEAD
-[0.3.1]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.1
+[Unreleased]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/compare/v0.3.7...HEAD
+[0.3.7]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.7
 [0.3.0]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.0
 [0.2.2]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.2
 [0.2.1]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.1
