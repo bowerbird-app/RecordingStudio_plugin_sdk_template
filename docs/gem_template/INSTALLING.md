@@ -206,6 +206,9 @@ When Accessible is bundled, pin the dummy or host Gemfile to `v0.24.2`, add Tras
 `bin/rails generate recording_studio_accessible:migrations`, migrate, and rebuild Tailwind after
 bumping FlatPack (`v0.1.341`). Root Switchable `v0.11.7` also needs Metrics at
 `v0.7.3` (GitHub tag; gemspec `>= 0.3.0, < 1.0`) and Cache at `v0.6.3` (gemspec `~> 0.5`).
+List switcher roots with `RecordingStudioAccessible.root_recordings_for` and grant actors
+on those recordings (`bootstrap_owner_access!` for the first owner). Do not set
+`access_check` to always true.
 
 ---
 

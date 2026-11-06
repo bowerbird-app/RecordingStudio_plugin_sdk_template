@@ -2,6 +2,31 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
+bootstrap_owner_access = lambda do |recording, actor|
+  current_role = RecordingStudioAccessible.role_for(actor: actor, recording: recording)
+  next if current_role.to_s == "admin"
+
+  result = RecordingStudioAccessible.bootstrap_owner_access!(
+    recording: recording,
+    actor: actor
+  )
+  next if result.success?
+
+  original = RecordingStudioAccessible.configuration.access_management_authorizer
+  begin
+    RecordingStudioAccessible.configuration.access_management_authorizer = ->(**) { true }
+    result = RecordingStudioAccessible.grant_access(
+      recording: recording,
+      actor: actor,
+      role: :admin,
+      manager_actor: actor
+    )
+    raise "Failed to grant workspace access: #{result.error}" if result.failure?
+  ensure
+    RecordingStudioAccessible.configuration.access_management_authorizer = original
+  end
+end
+
 find_or_record_child = lambda do |recordable, root_recording, parent_recording|
   RecordingStudio::Recording.where(RecordingStudio::Recording.recording_studio_trashable_kept_sql).find_by(
     root_recording: root_recording,
@@ -40,6 +65,10 @@ begin
   folder_recording = find_or_record_child.call(folder, root_recording, root_recording)
 
   find_or_record_child.call(page, root_recording, folder_recording)
+
+  # Studio and Client are workspaces the seeded admin can open. Private stays ungranted.
+  bootstrap_owner_access.call(root_recording, user)
+  bootstrap_owner_access.call(accessible_root_recording, user)
 ensure
   Current.actor = previous_actor
 end

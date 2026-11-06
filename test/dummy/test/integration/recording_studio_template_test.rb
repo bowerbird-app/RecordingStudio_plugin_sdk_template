@@ -51,6 +51,21 @@ class RecordingStudioTemplateTest < ActiveSupport::TestCase
     assert_equal folder_recording, page_recording.parent_recording
     assert_equal root_recording, page_recording.root_recording
     assert_equal 3, Workspace.count
+    assert RecordingStudioAccessible.authorized?(
+      actor: User.find_by!(email: "admin@admin.com"),
+      recording: accessible_root_recording,
+      role: :admin
+    )
+    assert RecordingStudioAccessible.authorized?(
+      actor: User.find_by!(email: "admin@admin.com"),
+      recording: root_recording,
+      role: :admin
+    )
+    refute RecordingStudioAccessible.authorized?(
+      actor: User.find_by!(email: "admin@admin.com"),
+      recording: private_root_recording,
+      role: :view
+    )
 
     assert_no_difference -> { User.count } do
       assert_no_difference -> { RecordingStudio::Recording.count } do
