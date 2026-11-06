@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+- Dummy lockfile: `view_component` `>= 4.14` (GHSA-8qw7-6phv-7q6p) via FlatPack `v0.1.311`, and `crass` `>= 1.0.8` (CVE-2026-116695). Root lockfile also moves `crass` to `>= 1.0.8`. Dummy Recording Studio is `v4.7.1`, Root Switchable `v0.10.0`, and Metrics `v0.3.1` so default layout and the switch page match FlatPack 0.1.311.
+
 ## [0.3.1] - 2026-11-06
 
 ### Security
