@@ -196,16 +196,21 @@ The `gem_template` helper provides access to all engine routes.
 
 ## RecordingStudio Host-App Check
 
-This template's dummy app uses RecordingStudio `v4.7.0` (`~> 4.2` in the gemspec). Keep
+This template's dummy app uses RecordingStudio `v6.5.0` (`~> 6.3` in the gemspec). Keep
 `config.require_recordable_declarations = true`, declare every configured recordable with
 `recording_studio_recordable(...)`, and create roots with `RecordingStudio.root_recording_for(recordable)`.
 Child recordings must be created with an explicit `parent_recording`.
 
-When Accessible is bundled, pin the dummy or host Gemfile to `v0.18.0`, add Trashable
-`v0.11.0` with `require: false` (Accessible loads the query surface only), run
+When Accessible is bundled, pin the dummy or host Gemfile to `v0.24.2`, add Trashable
+`v0.12.3` with `require: false` (Accessible loads the query surface only), run
 `bin/rails generate recording_studio_accessible:migrations`, migrate, and rebuild Tailwind after
-bumping FlatPack (`v0.1.177`). Root Switchable `v0.9.0` also needs Metrics at
-`v0.2.0` (GitHub tag; gemspec `~> 0.2`) and Cache at `v0.5.0` (gemspec `~> 0.5`).
+bumping FlatPack (`v0.1.341`). Root Switchable `v0.11.7` also needs Metrics at
+`v0.7.3` (GitHub tag; gemspec `>= 0.3.0, < 1.0`) and Cache at `v0.6.3` (gemspec `~> 0.5`).
+List switcher roots with `RecordingStudioAccessible.root_recordings_for` and grant actors
+on those recordings (`bootstrap_owner_access!` for the first owner). Do not set
+`access_check` to always true. Set `config.authorize_write` to Accessible
+`authorized?` (`:edit` on the root). Access grant/bootstrap writes use
+`AccessCreationContext`, not a signed-in User check.
 
 ---
 

@@ -7,9 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.7] - 2026-11-06
+
+### Security
+- Root and dummy lockfiles: Rails `8.1.4.1`, rack `>= 3.2.8`, nokogiri `>= 1.19.5`, loofah `>= 2.25.3`, rails-html-sanitizer `>= 1.7.2`. Dummy also refreshes `net-ssh`.
+- Dummy lockfile: `view_component` `>= 4.14` (GHSA-8qw7-6phv-7q6p) via FlatPack `v0.1.341`, and `crass` `>= 1.0.8` (CVE-2026-116695). Root lockfile also moves `crass` to `>= 1.0.8`. Root and dummy also lift `action_text-trix`, `bcrypt`, `concurrent-ruby`, `devise`, `erb`, `net-imap`, `puma`, `rack-session`, and `websocket-driver` to current advisory floors.
+- Ruby pin `.ruby-version` `3.3.6` → `3.3.13`.
+
 ### Changed
 - Dummy Sign out Button uses FlatPack `href:` instead of `url:` so the link renders correctly on FlatPack ≥ 0.1.177.
-- Bump Recording Studio GitHub pin to `v4.2.2` (gemspec stays `~> 4.2`).
+- Dummy FlatPack GitHub pin `v0.1.177` → `v0.1.341`.
+- Recording Studio gemspec floor `~> 4.2` → `~> 6.3`. Dummy pins Recording Studio `v6.5.0` (current 6.x that resolves with FlatPack `v0.1.341` and Root Switchable `v0.11.7`), Accessible `v0.24.2`, Trashable `v0.12.3`, Root Switchable `v0.11.7`, Metrics `v0.7.3`, and Cache `v0.6.3`. Oauth and Admin stay unpinned; this dummy does not use them.
+- Dummy authenticated layout uses `recording_studio_layout` (Recording Studio 5+). Page chrome uses `content_for :title`, `flat_pack_page_nav`, and `recording_studio_page_nav_right` instead of `recording_studio_page_nav`.
+- Gem version `0.3.0` → `0.3.7` (do not reuse `0.3.1`–`0.3.6` tags).
+
+### Upgrade notes
+- Point host Gemfiles at Recording Studio `v6.5.0` (or another 6.3–6.x tag), FlatPack `v0.1.341`, and Root Switchable `v0.11.7`.
+- Replace `include RecordingStudio::UsesDefaultLayout` with `recording_studio_layout`. Set `content_for :title` and `flat_pack_page_nav` on screens that used `recording_studio_page_nav`.
+- Set `config.authorize_write` before Recording Studio 6.5. Dummy delegates that gate to Accessible (`:edit` on the root; access grant/bootstrap uses `AccessCreationContext`).
+- Run Accessible migrations for 0.24, then `bin/rails db:migrate`. Rebuild Tailwind after the FlatPack tag bump.
+- Dummy Root Switchable lists roots with `RecordingStudioAccessible.root_recordings_for`. Seed owner grants on Studio and Client workspaces. Grant Accessible access in dummy root-switch tests. Private Workspace stays ungranted.
 
 ## [0.3.0] - 2026-09-14
 
@@ -121,7 +138,8 @@ New addons copied from this template are born on Recording Studio 4.x.
 - Comprehensive README and documentation
 - Basic test suite with Minitest
 
-[Unreleased]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/compare/v0.3.7...HEAD
+[0.3.7]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.7
 [0.3.0]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.0
 [0.2.2]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.2
 [0.2.1]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.1

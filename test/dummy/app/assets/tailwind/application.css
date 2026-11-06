@@ -11,5 +11,9 @@
 @source "../../../vendor/bundle/**/flatpack/app/components/**/*.{rb,erb}";
 @source "../../../../../../usr/local/bundle/ruby/**/bundler/gems/flatpack-*/app/components/**/*.{rb,erb}";
 
+/* Root Switchable 0.11 ships dropdown ViewComponents that Tailwind must see */
+@source "../../../vendor/bundle/**/recordingstudio_root_switchable-*/app/components/**/*.{rb,erb}";
+@source "../../../../../../usr/local/bundle/ruby/**/bundler/gems/RecordingStudio_root_switchable-*/app/components/**/*.{rb,erb}";
+
 /* Include the engine's views in the Tailwind build */
 @source "../../../../../app/views/**/*.erb";

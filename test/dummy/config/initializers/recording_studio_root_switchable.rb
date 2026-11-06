@@ -5,8 +5,10 @@ RecordingStudioRootSwitchable.configure do |config|
     Current.actor || controller.current_user
   end
 
-  # Render the mounted switcher pages inside the app shell when users visit them.
-  config.layout = :application_layout
+  # Follow the host default layout. A Symbol method name raises on Root Switchable 0.11.
+  config.layout = lambda { |controller:|
+    "application" if controller.devise_controller?
+  }
 
   config.after_switch_redirect = lambda do |controller:, return_to:, **|
     candidate_path = return_to.presence
@@ -21,13 +23,11 @@ RecordingStudioRootSwitchable.configure do |config|
 
   config.scope :all_workspaces do |scope|
     scope.label = "All workspaces"
-    scope.description = "Every workspace root in the dummy app."
-    scope.available_roots = lambda do |**|
-      Workspace.order(:name).filter_map do |workspace|
-        RecordingStudio.root_recording_for(workspace)
-      end
+    scope.description = "Workspaces you can open in the dummy app."
+    scope.switchable_root_types = [ "Workspace" ]
+    scope.available_roots = lambda do |actor:, **|
+      RecordingStudioAccessible.root_recordings_for(actor: actor, minimum_role: :view)
     end
-    scope.access_check = ->(**) { true }
 
     scope.default_root = lambda do |roots:, **|
       roots.first

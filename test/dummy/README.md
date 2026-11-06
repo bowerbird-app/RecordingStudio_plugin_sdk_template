@@ -7,6 +7,7 @@ This Rails app exists to prove the Recording Studio plugin SDK in a real host ap
 - Devise authentication with a seeded admin user
 - `Current.actor` wiring for Recording Studio events
 - Root workspace plus seeded folder and page recordables
+- Accessible grants for the seeded admin on Studio and Client workspaces (Private stays ungranted)
 - Recording Studio default layout, FlatPack assets, and Tailwind source scanning
 - Mounted `RecordingStudio::Engine` route behavior inside a host app
 - Dummy-only `/docs/*` pages for host-app onboarding

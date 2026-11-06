@@ -116,7 +116,7 @@ Dummy credentials (`test/dummy/config/credentials.yml.enc`) are encrypted with t
 
 Open `/` after sign-in to mount fixture payloads from `/sdk-fixtures/` with assets from `/sdk/`.
 
-Authenticated dummy pages use Recording Studio's shared default layout (`RecordingStudio::UsesDefaultLayout`) plus FlatPack CSS and JS. Devise keeps its own sign-in layout. Dummy `/docs/*` pages stay in the dummy app as a host-app sandbox.
+Authenticated dummy pages use Recording Studio's shared default layout (`recording_studio_layout`) plus FlatPack CSS and JS. Devise keeps its own sign-in layout. Dummy `/docs/*` pages stay in the dummy app as a host-app sandbox.
 
 ### Login credentials
 
@@ -142,7 +142,7 @@ Authenticated dummy pages use Recording Studio's shared default layout (`Recordi
 | Node            | 20+ (CI uses 22) |
 | PostgreSQL      | 16      |
 | TailwindCSS     | 4 (dummy host only) |
-| RecordingStudio | 4.x (`~> 4.2`) |
+| RecordingStudio | 6.x (`~> 6.3`) |
 | FlatPack        | tokens synced into SDK CSS |
 | Devise          | latest  |
 

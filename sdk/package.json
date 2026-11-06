@@ -1,6 +1,6 @@
 {
   "name": "recording-studio-plugin-sdk",
-  "version": "0.3.0",
+  "version": "0.3.7",
   "private": true,
   "description": "Browser plugin SDK for the Recording Studio WordPress plugin feature",
   "type": "module",
