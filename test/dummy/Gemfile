@@ -3,18 +3,18 @@ source "https://rubygems.org"
 # Use the recording_studio_plugin_sdk_template engine
 gem "recording_studio_plugin_sdk_template", path: "../.."
 
-# RecordingStudio engine. Trashable 0.11.0 requires ~> 4.7.
-gem "recording_studio", github: "bowerbird-app/RecordingStudio", tag: "v4.7.1"
-gem "recording_studio_accessible", github: "bowerbird-app/RecordingStudio_accessible", tag: "v0.18.0"
-# Required by accessible >= 0.17.0 (query-only; GitHub tag; gemspec ~> 0.10)
-gem "recording_studio_trashable", github: "bowerbird-app/RecordingStudio_trashable", tag: "v0.11.0", require: false
+# RecordingStudio engine. Root Switchable 0.11.7 needs >= 6.3, < 7.
+gem "recording_studio", github: "bowerbird-app/RecordingStudio", tag: "v6.5.0"
+gem "recording_studio_accessible", github: "bowerbird-app/RecordingStudio_accessible", tag: "v0.24.2"
+# Required by accessible (query-only; GitHub tag; gemspec ~> 0.10)
+gem "recording_studio_trashable", github: "bowerbird-app/RecordingStudio_trashable", tag: "v0.12.3", require: false
 
 # Root switcher for the top nav
-gem "recording_studio_root_switchable", github: "bowerbird-app/RecordingStudio_root_switchable", tag: "v0.10.0"
-# Required by root_switchable >= 0.10.0 (GitHub-only; smallest tag satisfying >= 0.3, < 1.0)
-gem "recording_studio_metrics", github: "bowerbird-app/RecordingStudio_metrics", tag: "v0.3.1"
-# Required by root_switchable >= 0.9.0 (GitHub-only; smallest tag satisfying ~> 0.5)
-gem "recording_studio_cache", github: "bowerbird-app/RecordingStudio_cache", tag: "v0.5.0"
+gem "recording_studio_root_switchable", github: "bowerbird-app/RecordingStudio_root_switchable", tag: "v0.11.7"
+# Required by root_switchable (GitHub-only; gemspec >= 0.3.0, < 1.0)
+gem "recording_studio_metrics", github: "bowerbird-app/RecordingStudio_metrics", tag: "v0.7.3"
+# Required by root_switchable (GitHub-only; gemspec ~> 0.5 means >= 0.5, < 1.0)
+gem "recording_studio_cache", github: "bowerbird-app/RecordingStudio_cache", tag: "v0.6.3"
 
 # Devise authentication
 gem "devise"

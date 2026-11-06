@@ -5,8 +5,10 @@ RecordingStudioRootSwitchable.configure do |config|
     Current.actor || controller.current_user
   end
 
-  # Render the mounted switcher pages inside the app shell when users visit them.
-  config.layout = :application_layout
+  # Follow the host default layout. A Symbol method name raises on Root Switchable 0.11.
+  config.layout = lambda { |controller:|
+    "application" if controller.devise_controller?
+  }
 
   config.after_switch_redirect = lambda do |controller:, return_to:, **|
     candidate_path = return_to.presence

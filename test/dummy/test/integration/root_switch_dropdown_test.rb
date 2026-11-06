@@ -25,6 +25,7 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     end
 
     sign_in user
+    Current.actor = user
 
     workspace = Workspace.create!(name: "Dropdown Workspace")
     RecordingStudio.root_recording_for(workspace)
@@ -34,6 +35,10 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, workspace.name
     assert_select "body[data-recording-studio-default-layout='true']", count: 1
+    assert_select "[data-controller='flat-pack--button-dropdown']", minimum: 1
+    assert_select "[data-flat-pack--button-dropdown-target='trigger']", text: /Dropdown Workspace/
+  ensure
+    Current.actor = nil
   end
 
   test "root switch page renders with the host default layout" do
@@ -43,6 +48,7 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     end
 
     sign_in user
+    Current.actor = user
 
     workspace = Workspace.create!(name: "Switch Page Workspace")
     RecordingStudio.root_recording_for(workspace)
@@ -52,6 +58,8 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "body[data-recording-studio-default-layout='true']", count: 1
     refute_includes response.body, "flat-pack-sidebar-layout"
+  ensure
+    Current.actor = nil
   end
 
   test "switching returns to the current page when it is a valid internal route" do
@@ -61,6 +69,7 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     end
 
     sign_in user
+    Current.actor = user
 
     source_workspace = Workspace.create!(name: "Source Workspace")
     target_workspace = Workspace.create!(name: "Target Workspace")
@@ -76,6 +85,8 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to "/docs/install"
+  ensure
+    Current.actor = nil
   end
 
   test "switching falls back to home when return_to is not a valid internal route" do
@@ -85,6 +96,7 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     end
 
     sign_in user
+    Current.actor = user
 
     source_workspace = Workspace.create!(name: "Fallback Source Workspace")
     target_workspace = Workspace.create!(name: "Fallback Target Workspace")
@@ -100,5 +112,7 @@ class RootSwitchDropdownTest < ActionDispatch::IntegrationTest
     }
 
     assert_redirected_to "/"
+  ensure
+    Current.actor = nil
   end
 end

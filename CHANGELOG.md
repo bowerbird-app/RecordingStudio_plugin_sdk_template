@@ -16,8 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Dummy Sign out Button uses FlatPack `href:` instead of `url:` so the link renders correctly on FlatPack ≥ 0.1.177.
-- Dummy FlatPack GitHub pin `v0.1.177` → `v0.1.341`. Recording Studio stays `v4.7.1` (Trashable `~> 4.7`). Root Switchable stays `v0.10.0` because `v0.11.7` needs Recording Studio `>= 6.3` and this gemspec stays `~> 4.2`. Metrics stays `v0.3.1`.
+- Dummy FlatPack GitHub pin `v0.1.177` → `v0.1.341`.
+- Recording Studio gemspec floor `~> 4.2` → `~> 6.3`. Dummy pins Recording Studio `v6.5.0` (current 6.x that resolves with FlatPack `v0.1.341` and Root Switchable `v0.11.7`), Accessible `v0.24.2`, Trashable `v0.12.3`, Root Switchable `v0.11.7`, Metrics `v0.7.3`, and Cache `v0.6.3`. Oauth and Admin stay unpinned; this dummy does not use them.
+- Dummy authenticated layout uses `recording_studio_layout` (Recording Studio 5+). Page chrome uses `content_for :title`, `flat_pack_page_nav`, and `recording_studio_page_nav_right` instead of `recording_studio_page_nav`.
 - Gem version `0.3.0` → `0.3.7` (do not reuse `0.3.1`–`0.3.6` tags).
+
+### Upgrade notes
+- Point host Gemfiles at Recording Studio `v6.5.0` (or another 6.3–6.x tag), FlatPack `v0.1.341`, and Root Switchable `v0.11.7`.
+- Replace `include RecordingStudio::UsesDefaultLayout` with `recording_studio_layout`. Set `content_for :title` and `flat_pack_page_nav` on screens that used `recording_studio_page_nav`.
+- Set `config.authorize_write` before Recording Studio 6.5. Dummy allows persisted `User` actors.
+- Run Accessible migrations for 0.24, then `bin/rails db:migrate`. Rebuild Tailwind after the FlatPack tag bump.
 
 ## [0.3.0] - 2026-09-14
 
