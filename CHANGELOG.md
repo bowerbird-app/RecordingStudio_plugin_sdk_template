@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-06
+
+### Security
+- Root and dummy lockfiles: Rails `8.1.4.1`, rack `>= 3.2.8`, nokogiri `>= 1.19.5`, loofah `>= 2.25.3`, rails-html-sanitizer `>= 1.7.2`. Dummy also refreshes `net-ssh`.
+- Ruby pin `.ruby-version` `3.3.6` → `3.3.13`.
+
 ### Changed
 - Dummy Sign out Button uses FlatPack `href:` instead of `url:` so the link renders correctly on FlatPack ≥ 0.1.177.
 - Bump Recording Studio GitHub pin to `v4.2.2` (gemspec stays `~> 4.2`).
@@ -121,7 +127,8 @@ New addons copied from this template are born on Recording Studio 4.x.
 - Comprehensive README and documentation
 - Basic test suite with Minitest
 
-[Unreleased]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.1
 [0.3.0]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.3.0
 [0.2.2]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.2
 [0.2.1]: https://github.com/bowerbird-app/RecordingStudio_plugin_sdk_template/releases/tag/v0.2.1

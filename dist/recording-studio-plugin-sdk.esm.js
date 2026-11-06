@@ -198,7 +198,7 @@ function clearWidget(root) {
 }
 
 // src/version.ts
-var SDK_VERSION = "0.3.0";
+var SDK_VERSION = "0.3.1";
 
 // src/instance.ts
 var WidgetInstance = class {
